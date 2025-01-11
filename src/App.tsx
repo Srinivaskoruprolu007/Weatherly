@@ -1,16 +1,27 @@
-import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "./components/theme-provider";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "./components/context/theme-provider";
 import Layout from "./components/Layout";
+import WeatherDashboard from "./pages/weather-dashboard";
+import CityPage from "./pages/city-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools"
 
+const queryClient = new QueryClient();
 function App() {
   return (
-    <BrowserRouter>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Layout>
-          Hello
-        </Layout>
-      </ThemeProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <Layout>
+            <Routes>
+              <Route path="/" element={<WeatherDashboard />} />
+              <Route path="/city/:cityName" element={<CityPage />} />
+            </Routes>
+          </Layout>
+        </ThemeProvider>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} / >
+    </QueryClientProvider>
   );
 }
 
