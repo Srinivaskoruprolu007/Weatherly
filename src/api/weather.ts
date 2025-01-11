@@ -4,8 +4,8 @@ import { Coordinates, WeatherData, ForecastData, GeoCodeData } from "./types";
 class WeatherAPI {
   private createUrl(endpoint: string, params: Record<string, string | number>) {
     const searchParams = new URLSearchParams({
-      appid: API_CONFIG.API_KEY,
       ...params,
+      appid: API_CONFIG.API_KEY,
     });
 
     return `${endpoint}?${searchParams.toString()}`;
@@ -40,8 +40,10 @@ class WeatherAPI {
     const url = this.createUrl(`${API_CONFIG.GEO_CODING}/reverse`, {
       lat: lat.toString(),
       lon: lon.toString(),
-      limit:1,
+      limit: 1,
     });
     return this.fetchData<GeoCodeData[]>(url);
   }
 }
+
+export const weatherAPI = new WeatherAPI();
