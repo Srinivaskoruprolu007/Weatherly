@@ -10,7 +10,7 @@ import {
 import { AlertCircle, MapPin, RefreshCw } from "lucide-react";
 import CurrentWeather from "@/components/CurrentWeather";
 import HourlyTemperature from "@/components/HourlyTemperature";
-
+import WeatherDetails from "@/components/WeatherDetails";
 const WeatherDashboard = () => {
   const {
     coordinates,
@@ -113,6 +113,7 @@ const WeatherDashboard = () => {
         </div>
         <div>
           {/* details */}
+          <WeatherDetails data={weatherQuery.data}/>
           {/* forecast */}
         </div>
       </div>
