@@ -39,10 +39,16 @@ const WeatherDashboard = () => {
     return (
       <Alert variant="destructive" className="max-w-2xl mx-auto mt-8">
         <AlertCircle className="h-5 w-5" />
-        <AlertTitle className="text-lg font-semibold">Location Error</AlertTitle>
+        <AlertTitle className="text-lg font-semibold">
+          Location Error
+        </AlertTitle>
         <AlertDescription className="flex flex-col gap-4 mt-2">
           <p className="text-sm opacity-90">{locationError}</p>
-          <Button onClick={getLocation} variant="outline" className="w-fit hover:bg-background/90">
+          <Button
+            onClick={getLocation}
+            variant="outline"
+            className="w-fit hover:bg-background/90"
+          >
             <MapPin className="mr-2 h-4 w-4" />
             Enable Location
           </Button>
@@ -54,10 +60,18 @@ const WeatherDashboard = () => {
   if (!coordinates) {
     return (
       <Alert variant="destructive" className="max-w-2xl mx-auto mt-8">
-        <AlertTitle className="text-lg font-semibold">Location Required</AlertTitle>
+        <AlertTitle className="text-lg font-semibold">
+          Location Required
+        </AlertTitle>
         <AlertDescription className="flex flex-col gap-4 mt-2">
-          <p className="text-sm opacity-90">Please enable location access to see your local weather.</p>
-          <Button onClick={getLocation} variant="outline" className="w-fit hover:bg-background/90">
+          <p className="text-sm opacity-90">
+            Please enable location access to see your local weather.
+          </p>
+          <Button
+            onClick={getLocation}
+            variant="outline"
+            className="w-fit hover:bg-background/90"
+          >
             <MapPin className="mr-2 h-4 w-4" />
             Enable Location
           </Button>
@@ -74,8 +88,14 @@ const WeatherDashboard = () => {
         <AlertCircle className="h-5 w-5" />
         <AlertTitle className="text-lg font-semibold">Error</AlertTitle>
         <AlertDescription className="flex flex-col gap-4 mt-2">
-          <p className="text-sm opacity-90">Failed to fetch weather data. Please try again</p>
-          <Button onClick={handleRefresh} variant="outline" className="w-fit hover:bg-background/90">
+          <p className="text-sm opacity-90">
+            Failed to fetch weather data. Please try again
+          </p>
+          <Button
+            onClick={handleRefresh}
+            variant="outline"
+            className="w-fit hover:bg-background/90"
+          >
             <RefreshCw className="mr-2 h-4 w-4" />
             Retry
           </Button>
@@ -101,8 +121,8 @@ const WeatherDashboard = () => {
           className="hover:bg-muted transition-colors duration-200"
         >
           <RefreshCw
-            className={`h-4 w-4 text-foreground/80 ${
-              weatherQuery.isFetching ? "animate-spin" : ""
+            className={`h-4 w-4 text-foreground/80 dark:text-zinc-50 ${
+              weatherQuery.isFetching ? "animate-spin duration-1000" : ""
             }`}
           />
         </Button>
