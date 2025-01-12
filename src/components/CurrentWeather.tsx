@@ -13,18 +13,9 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
     main: { temp, temp_max, temp_min, feels_like, humidity },
     wind: { speed },
   } = data;
-
   const formatTemp = (temp: number) => `${Math.round(temp)}℃`;
-
-  // Determine temperature colors
-  const getTempColor = (temp: number) => {
-    if (temp < 0) return "text-blue-500"; // Cold
-    if (temp >= 0 && temp <= 20) return "text-yellow-500"; // Mild
-    return "text-red-500"; // Hot
-  };
-
   return (
-    <Card className="overflow-hidden bg-gradient-to-br p-4">
+    <Card className="overflow-hidden">
       <CardContent className="p-6">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
@@ -40,15 +31,13 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
               <p className="text-gray-500">{locationName?.country}</p>
             </div>
             <div className="flex items-center gap-2">
-              <p className={`text-7xl tracking-tighter font-bold ${getTempColor(temp)}`}>
+              <p className="text-7xl tracking-tighter font-bold">
                 {formatTemp(temp)}
               </p>
               <div className="space-y-1">
-                {feels_like && (
-                  <p className="text-sm font-medium text-gray-600">
-                    Feels like {formatTemp(feels_like)}
-                  </p>
-                )}
+                <p className="text-sm font-medium text-gray-600">
+                  Feels like {feels_like}
+                </p>
                 <div className="flex items-center gap-1 ">
                   <span className="flex items-center gap-1 text-blue-500">
                     <ArrowDown className="h-3 w-3" /> {formatTemp(temp_min)}
@@ -71,8 +60,8 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
               </div>
               <div className="flex items-center gap-2">
                 <Wind className="h-4 w-4 text-blue-500" />
-                <div className="space-y-0.5">
-                  <p className="text-sm font-medium">Wind Speed</p>
+                <div className="spa-y-0.5">
+                  <p className="text-sm font-medium ">Wind Speed</p>
                   <p className="text-sm font-medium text-gray-600">
                     {speed} m/s
                   </p>
@@ -84,7 +73,7 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
             <div className="relative flex aspect-square w-full max-w-[200px] items-center justify-center">
               <img
                 src={`https://openweathermap.org/img/wn/${currentWeather.icon}@4x.png`}
-                alt={currentWeather.description || "Weather Icon"}
+                alt="weathe_img"
                 className="h-full w-full object-contain"
               />
               <div className="absolute bottom-0 text-center">

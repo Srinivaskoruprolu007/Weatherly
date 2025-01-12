@@ -24,48 +24,50 @@ export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
+  ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
-    return storedTheme || defaultTheme;
-  });
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
-    const applyTheme = (themeToApply: string) => {
-      root.classList.remove("light", "dark");
-      root.classList.add(themeToApply);
-    };
+
+    root.classList.remove("light", "dark");
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
-      applyTheme(systemTheme);
-    } else {
-      applyTheme(theme);
+
+      root.classList.add(systemTheme);
+      return;
     }
+
+    root.classList.add(theme);
   }, [theme]);
 
-  const handleThemeChange = (newTheme: Theme) => {
-    localStorage.setItem(storageKey, newTheme);
-    setTheme(newTheme);
+  const value = {
+    theme,
+    setTheme: (theme: Theme) => {
+      localStorage.setItem(storageKey, theme);
+      setTheme(theme);
+    },
   };
 
-  const contextValue = { theme, setTheme: handleThemeChange };
-
   return (
-    <ThemeProviderContext.Provider value={contextValue}>
+    <ThemeProviderContext.Provider {...props} value={value}>
       {children}
     </ThemeProviderContext.Provider>
   );
 }
 
-export const useTheme = (): ThemeProviderState => {
+export const useTheme = () => {
   const context = useContext(ThemeProviderContext);
-  if (!context) {
+
+  if (context === undefined)
     throw new Error("useTheme must be used within a ThemeProvider");
-  }
+
   return context;
 };

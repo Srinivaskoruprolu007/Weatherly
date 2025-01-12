@@ -73,24 +73,18 @@ function FavouriteCityTablet({
   const navigate = useNavigate();
   const { data: weather, isLoading, error } = useWeatherQuery({ lat, lon });
 
-  const handleCardClick = () => {
-    navigate(`/city/${name}?lat=${lat}&lon=${lon}`);
-  };
-
-  const handleRemoveClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent click propagation to parent
-    onRemove(id);
-  };
-
   return (
     <div
-      onClick={handleCardClick}
+      onClick={() => navigate(`/city/${name}?lat=${lat}&lon=${lon}`)}
       role="button"
       tabIndex={0}
       className="relative flex flex-col items-start justify-between p-4 w-64 h-36 rounded-md border border-zinc-200 bg-white shadow-sm hover:shadow-md hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 cursor-pointer transition-transform transform hover:-translate-y-1"
     >
       <Button
-        onClick={handleRemoveClick}
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent click propagation to parent
+          onRemove(id);
+        }}
         className="absolute top-2 right-2 h-6 w-6 rounded bg-transparent hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         <XIcon className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
@@ -104,11 +98,11 @@ function FavouriteCityTablet({
       {isLoading ? (
         <div className="mt-2 flex items-center justify-center text-sm text-zinc-500 dark:text-zinc-400">
           <Loader2 className="h-5 w-5 animate-spin" />
-          <span className="ml-2">Fetching weather...</span>
+          <span className="ml-2">Loading weather...</span>
         </div>
       ) : error ? (
         <div className="mt-2 text-sm text-red-500 dark:text-red-400">
-          Unable to fetch weather. Please try again later.
+          Failed to fetch weather
         </div>
       ) : weather ? (
         <div className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">

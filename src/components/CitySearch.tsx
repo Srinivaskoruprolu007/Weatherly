@@ -20,7 +20,6 @@ const CitySearch = () => {
   const navigate = useNavigate();
   const { data: location, isLoading } = useLocationQuery(query);
   const { history, addToHistory, removeFromHistory } = useSearchHistory();
-
   const handleSelect = (city: string) => {
     const [lat, lon, name, country] = city.split("|");
     setOpen(false);
@@ -33,7 +32,6 @@ const CitySearch = () => {
       country,
     });
   };
-
   return (
     <>
       <Button
@@ -49,20 +47,15 @@ const CitySearch = () => {
           placeholder="Search city..."
           value={query}
           onValueChange={setQuery}
-          aria-label="Search for a city"
         />
         <CommandList>
-          {/* No results */}
           {query.length > 2 && !isLoading && (
             <CommandEmpty>No results found</CommandEmpty>
           )}
-
-          {/* Favourites Section */}
           <CommandGroup heading="Favourites">
             <CommandItem>Bengaluru</CommandItem>
           </CommandGroup>
 
-          {/* Search History */}
           {history.length > 0 && (
             <>
               <CommandSeparator />
@@ -72,7 +65,6 @@ const CitySearch = () => {
                   <Button
                     variant="ghost"
                     onClick={() => removeFromHistory.mutate()}
-                    aria-label="Clear search history"
                   >
                     <XCircle className="h-4 w-4" />
                     Clear
@@ -83,7 +75,6 @@ const CitySearch = () => {
                     key={city.lat + city.lon}
                     onSelect={handleSelect}
                     value={`${city.lat}| ${city.lon} | ${city.name}| ${city.country}`}
-                    aria-label={`Select ${city.name}, ${city.country}`}
                   >
                     <Clock className="mr-2 h-4 w-4" />
                     {city.name}
@@ -102,34 +93,31 @@ const CitySearch = () => {
             </>
           )}
 
-          {/* Search Results */}
           {location && location.length > 0 && (
             <CommandGroup heading="Locations">
-              {isLoading ? (
+              {isLoading && (
                 <div className="flex items-center justify-center p-4">
                   <Loader2 className="h-5 w-5 animate-spin" />
                 </div>
-              ) : (
-                location.map((location) => (
-                  <CommandItem
-                    key={location.lat + location.lon}
-                    onSelect={handleSelect}
-                    value={`${location.lat}| ${location.lon} | ${location.name}| ${location.country}`}
-                    aria-label={`Select ${location.name}, ${location.country}`}
-                  >
-                    <Search className="mr-2 h-4 w-4" />
-                    {location.name}
-                    {location.state && (
-                      <span className="text-sm text-muted-foreground">
-                        , {location.state}
-                      </span>
-                    )}
-                    <span className="text-sm text-muted-foreground">
-                      , {location.country}
-                    </span>
-                  </CommandItem>
-                ))
               )}
+              {location.map((location) => (
+                <CommandItem
+                  key={location.lat + location.lon}
+                  onSelect={handleSelect}
+                  value={`${location.lat}| ${location.lon} | ${location.name}| ${location.country}`}
+                >
+                  <Search className="mr-2 h-4 w-4" />
+                  {location.name}
+                  {location.state && (
+                    <span className="text-sm text-muted-foreground">
+                      , {location.state}
+                    </span>
+                  )}
+                  <span className="text-sm text-muted-foreground">
+                    , {location.country}
+                  </span>
+                </CommandItem>
+              ))}
             </CommandGroup>
           )}
         </CommandList>
