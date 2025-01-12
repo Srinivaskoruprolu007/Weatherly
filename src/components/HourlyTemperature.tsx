@@ -54,8 +54,8 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
             >
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#888888"
-                opacity={0.1}
+                stroke="#f0f0f0"
+                opacity={0.5}
                 vertical={false}
               />
               <XAxis
@@ -78,23 +78,19 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     return (
-                      <div className="rounded-lg border bg-background p-3 shadow-md dark:border-gray-800">
+                      <div className="rounded-lg border bg-blue-700 p-3 shadow-md text-white">
                         <div className="grid grid-cols-2 gap-3">
                           <div className="flex flex-col gap-1">
-                            <span className="text-[0.7rem] uppercase text-muted-foreground">
+                            <span className="text-[0.7rem] uppercase text-gray-400">
                               Temperature
                             </span>
-                            <span className="text-base font-bold text-foreground">
-                              {payload[0].value}°
-                            </span>
+                            <span className="text-base font-bold">{payload[0].value}°</span>
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="text-[0.7rem] uppercase text-muted-foreground">
-                              Feels like
+                            <span className="text-[0.7rem] uppercase text-gray-400">
+                              Feels Like
                             </span>
-                            <span className="text-base font-bold text-foreground">
-                              {payload[1].value}°
-                            </span>
+                            <span className="text-base font-bold">{payload[1].value}°</span>
                           </div>
                         </div>
                       </div>
@@ -106,8 +102,8 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
               <Line
                 type="monotone"
                 dataKey="temp"
-                stroke="#2563eb"
-                strokeWidth={2.5}
+                stroke="url(#tempGradient)"
+                strokeWidth={3}
                 dot={false}
                 activeDot={{
                   r: 4,
@@ -119,19 +115,29 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
               <Line
                 type="monotone"
                 dataKey="feels_like"
-                stroke="#2563eb"
-                strokeWidth={2.5}
-                strokeOpacity={0.5}
+                stroke="url(#feelsLikeGradient)"
+                strokeWidth={3}
+                strokeOpacity={0.7}
                 dot={false}
                 activeDot={{
                   r: 4,
                   stroke: "#2563eb",
                   strokeWidth: 2,
-                  strokeOpacity: 0.5,
+                  strokeOpacity: 0.7,
                   fill: "#fff",
                 }}
                 strokeDasharray="5 5"
               />
+              <defs>
+                <linearGradient id="tempGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#2563eb" />
+                  <stop offset="100%" stopColor="#34d399" />
+                </linearGradient>
+                <linearGradient id="feelsLikeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#22d3ee" />
+                </linearGradient>
+              </defs>
             </LineChart>
           </ResponsiveContainer>
         </div>
