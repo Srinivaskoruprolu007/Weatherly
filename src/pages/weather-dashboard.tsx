@@ -8,6 +8,8 @@ import {
   useWeatherQuery,
 } from "@/hooks/use-weather";
 import { AlertCircle, MapPin, RefreshCw } from "lucide-react";
+import CurrentWeather from "@/components/CurrentWeather";
+import HourlyTemperature from "@/components/HourlyTemperature";
 
 const WeatherDashboard = () => {
   const {
@@ -19,9 +21,9 @@ const WeatherDashboard = () => {
   const weatherQuery = useWeatherQuery(coordinates);
   const forecastQuery = useForecastQuery(coordinates);
   const locationQuery = useReverseGeocodeQuery(coordinates);
-  console.log(locationQuery);
+  /*   console.log(locationQuery);
   console.log(weatherQuery);
-  console.log(forecastQuery);
+  console.log(forecastQuery); */
 
   const handleRefresh = () => {
     getLocation();
@@ -101,10 +103,17 @@ const WeatherDashboard = () => {
       </div>
       <div>
         <div>
-
+          <CurrentWeather
+            data={weatherQuery.data}
+            locationName={locationName}
+          />
+          {/* Current weather */}
+          {/* hourly temperature */}
+          <HourlyTemperature data={forecastQuery.data}/>
         </div>
         <div>
-            
+          {/* details */}
+          {/* forecast */}
         </div>
       </div>
     </div>
