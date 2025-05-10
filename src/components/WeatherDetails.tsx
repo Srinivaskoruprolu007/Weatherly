@@ -25,36 +25,38 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
       title: "Sunrise",
       value: formatTime(sys.sunrise),
       icon: Sunrise,
-      color: "text-orange-500",
-      bgColor: "bg-orange-500/10 dark:bg-orange-500/20",
+      color: "text-sunset-orange",
+      bgColor: "bg-sunset-orange/10 dark:bg-sunset-orange/20",
     },
     {
       title: "Sunset",
       value: formatTime(sys.sunset),
       icon: Sunset,
-      color: "text-orange-500",
-      bgColor: "bg-orange-500/10 dark:bg-orange-500/20",
+      color: "text-sunset-orange",
+      bgColor: "bg-sunset-orange/10 dark:bg-sunset-orange/20",
     },
     {
       title: "Wind Direction",
       value: `${getWindDirection(wind.deg)} (${wind.deg}°)`,
       icon: Compass,
-      color: "text-green-500",
-      bgColor: "bg-green-500/10 dark:bg-green-500/20",
+      color: "text-earth-green",
+      bgColor: "bg-earth-green/10 dark:bg-earth-green/20",
     },
     {
       title: "Pressure",
       value: `${main.pressure} hPa`,
       icon: Gauge,
-      color: "text-purple-500",
-      bgColor: "bg-purple-500/10 dark:bg-purple-500/20",
+      color: "text-sky-blue",
+      bgColor: "bg-sky-blue/10 dark:bg-sky-blue/20",
     },
   ];
 
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-gradient-purple-orange bg-[length:200%_200%] animate-gradient-x transition-gradient duration-700">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-semibold">Weather Details</CardTitle>
+        <CardTitle className="text-lg font-semibold text-text-primary">
+          Weather Details
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -67,10 +69,10 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
                 <item.icon className={`h-5 w-5 ${item.color}`} />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">
+                <p className="text-sm font-medium text-text-secondary">
                   {item.title}
                 </p>
-                <p className="text-base font-semibold text-foreground">
+                <p className="text-base font-semibold text-text-primary">
                   {item.value}
                 </p>
               </div>

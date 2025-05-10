@@ -18,12 +18,15 @@ const Header = () => {
           />
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-full justify-end">
+          {/* Desktop search */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-            {/* search */}
             <CitySearch />
           </nav>
-
+          {/* Mobile search button */}
+          <div className="flex md:hidden w-full max-w-[180px]">
+            <CitySearch />
+          </div>
           <div className="flex items-center gap-2">
             <ModeToggle />
           </div>
