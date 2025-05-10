@@ -13,6 +13,7 @@ import { Clock, Loader2, Search, XCircle } from "lucide-react";
 import { useLocationQuery } from "@/hooks/use-weather";
 import { useNavigate } from "react-router-dom";
 import { useSearchHistory } from "@/hooks/use-search-history";
+import { useFavourite } from "@/hooks/use-favourites";
 
 const CitySearch = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,7 @@ const CitySearch = () => {
       country,
     });
   };
+  const { favourite } = useFavourite();
   return (
     <>
       <Button
@@ -53,7 +55,23 @@ const CitySearch = () => {
             <CommandEmpty>No results found</CommandEmpty>
           )}
           <CommandGroup heading="Favourites">
-            <CommandItem>Bengaluru</CommandItem>
+            {favourite.length === 0 && (
+              <CommandItem disabled>No favourite cities</CommandItem>
+            )}
+            {favourite.map((city) => (
+              <CommandItem
+                key={city.id}
+                onSelect={() => handleSelect(`${city.lat}|${city.lon}|${city.name}|${city.country}`)}
+                value={`${city.lat}|${city.lon}|${city.name}|${city.country}`}
+              >
+                <span className="mr-2">⭐</span>
+                {city.name}
+                {city.state && (
+                  <span className="text-sm text-muted-foreground">, {city.state}</span>
+                )}
+                <span className="text-sm text-muted-foreground">, {city.country}</span>
+              </CommandItem>
+            ))}
           </CommandGroup>
 
           {history.length > 0 && (

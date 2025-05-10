@@ -14,6 +14,15 @@ export function useGeolocation() {
     isLoading: true,
   });
 
+  // Optionally, debounce/throttle logic can be added here in the future
+  // Simple debounce utility
+  function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
+    let timeout: ReturnType<typeof setTimeout>;
+    return function(this: any, ...args: Parameters<T>) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
   const getLocation = () => {
     setLocationData((prev) => ({ ...prev, isLoading: true, error: null }));
 
@@ -23,6 +32,7 @@ export function useGeolocation() {
         error: "Geolocation is not supported by your browser",
         isLoading: false,
       });
+      return; // Return early to prevent duplicate calls
     }
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -49,7 +59,7 @@ export function useGeolocation() {
             errorMessage = "Location request timed out";
             break;
           default:
-            errorMessage = "An unknown error occured";
+            errorMessage = "An unknown error occurred";
         }
         setLocationData({
           coordinates: null,
@@ -71,6 +81,6 @@ export function useGeolocation() {
 
   return {
     ...locationData,
-    getLocation,
+    getLocation: debounce(getLocation, 1000),
   };
 }
