@@ -17,8 +17,8 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
   return (
     <Card className="overflow-hidden bg-gradient-sky-blue bg-[length:200%_200%] animate-gradient-x transition-gradient duration-700 shadow-lg border-sky-blue/40">
       <CardContent className="p-6">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-4">
+        <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
+          <div className="space-y-6">
             <div className="space-y-2">
               <div className="flex items-end gap-1">
                 <h2 className="text-2xl font-bold tracking-tighter text-text-primary">
