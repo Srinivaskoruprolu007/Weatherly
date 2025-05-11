@@ -39,7 +39,7 @@ const CitySearch = () => {
       <Button
         onClick={() => setOpen(true)}
         variant="ghost"
-        className="w-full justify-start text-left font-normal rounded-md border-none dark:text-zinc-50 dark:hover:bg-zinc-800"
+        className="w-full justify-start text-left font-normal rounded-md border-none dark:text-zinc-50 dark:hover:bg-zinc-800 "
       >
         <Search className="mr-2 h-4 w-4" />
         Search Cities...
