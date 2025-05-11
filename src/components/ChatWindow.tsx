@@ -4,6 +4,7 @@ import { sendMessageToGemini } from '@/services/geminiService';
 
 interface ChatWindowProps {
   onClose: () => void;
+  currentWeatherData?: string; // Added to pass weather context
 }
 
 interface Message {
@@ -12,7 +13,7 @@ interface Message {
   sender: "user" | "bot";
 }
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ onClose }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ onClose, currentWeatherData }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +38,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      const botResponse = await sendMessageToGemini(userMessage.text);
+      const botResponse = await sendMessageToGemini(userMessage.text, currentWeatherData);
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: botResponse,

@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import ChatWindow from './ChatWindow';
 
-const ChatBubble: React.FC = () => {
+interface ChatBubbleProps {
+  currentWeatherData?: string;
+}
+
+const ChatBubble: React.FC<ChatBubbleProps> = ({ currentWeatherData }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const toggleChat = () => {
@@ -18,7 +22,7 @@ const ChatBubble: React.FC = () => {
       >
         <MessageSquare size={28} />
       </button>
-      {isChatOpen && <ChatWindow onClose={toggleChat} />}
+      {isChatOpen && <ChatWindow onClose={toggleChat} currentWeatherData={currentWeatherData} />}
     </>
   );
 };

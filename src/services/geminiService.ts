@@ -51,13 +51,14 @@ export interface GeminiResponse {
  * @param message The user's message string.
  * @returns A promise that resolves to the Gemini API's response.
  */
-export const sendMessageToGemini = async (message: string): Promise<string> => {
+export const sendMessageToGemini = async (message: string, weatherContext?: string): Promise<string> => {
   if (!apiKey) {
     console.error("Gemini API key is not configured.");
     return "AI service is not configured. Please check the API key.";
   }
 
-  console.log("Sending message to Gemini:", message);
+  const fullMessage = weatherContext ? `Weather Information: ${weatherContext}\n\nUser's question: ${message}` : message;
+  console.log("Sending message to Gemini with context:", fullMessage);
 
   try {
     const chatSession = model.startChat({
@@ -66,7 +67,7 @@ export const sendMessageToGemini = async (message: string): Promise<string> => {
       history: [], // You can manage chat history here if needed
     });
 
-    const result = await chatSession.sendMessage(message);
+    const result = await chatSession.sendMessage(fullMessage);
     const botText = result.response.text();
     console.log("Received response from Gemini:", botText);
     return botText;
